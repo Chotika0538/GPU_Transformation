@@ -47,7 +47,7 @@
         scene.add(ambient);
 
         // ✅ กล้อง
-        camera.position.set(0, 1, 5);//(หมุนมุมซ้ายขวา,ค.สูงมุมกล้อง, ใกล้ไกล)
+        camera.position.set(0, 1, 3);//(หมุนมุมซ้ายขวา,ค.สูงมุมกล้อง, ใกล้ไกล)
         camera.lookAt(0, 0, 0);
 
         // ✅ กล่อง
@@ -78,28 +78,42 @@
         scene.add(plane);
 
 
+        // เพิ่มตัวแปรความเร็ว
+        let velocityX = 0;
+        let velocityY = 0;
         window.addEventListener('keydown', (event) => {
             if (event.key === "ArrowUp") {
-                cube.position.y += 0.05;
+                velocityY = 0.05;
             }
             else if (event.key === "ArrowDown") {
-                cube.position.y -= 0.05;
+                velocityY = -0.05;
             }
             else if (event.key === "ArrowLeft") {
-                cube.position.x -= 0.05;
+                velocityX = -0.05;
             }
             else if (event.key === "ArrowRight") {
-                cube.position.x += 0.05;
+                velocityX = 0.05;
+            }
+        });
+        // ฟังชันเมื่อปล่อยปุ่ม
+        window.addEventListener('keyup', (event) => {
+            if (event.key === "ArrowUp"|| event.key === "ArrowDown") {
+                velocityY = 0;
+            }
+            if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+                velocityX = 0;
             }
         });
 
         // ✅ render loop
         function animate(t) {
-            cube.scale.x=2;
+            cube.scale.x = 2;
+            cube.position.x += velocityX;
+            cube.position.y += velocityY;
             //cube.position.y= 1;
             //cube.rotation.x = t * 0.001;//หมุนรอบแกน x
             //cube.rotation.y = t * 0.001;//หมุนรอบแกน y
-            cube.rotation.z = t * 0.001;//หมุนรอบแกน z
+            cube.rotation.z = t * 0.002;//หมุนรอบแกน z
 
             sphere.rotation.y = t * 0.001;
 
